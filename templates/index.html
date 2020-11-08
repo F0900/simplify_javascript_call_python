@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XXX</title>
+</head>
+<style>
+    .menu{
+        display: inline-block;
+        width: 190px;
+        /* padding-top: 10px;
+        padding-bottom: 10px; */
+        padding-left: 10px;
+        border-bottom: 1px solid #000;
+        
+        position: relative;
+    }
+    .menu p{
+        /* background-color: red; */
+        width: 180px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .content{
+        display: none;
+        padding:10px;
+    }
+ 
+</style>
+<body>
+
+    <div style="position: absolute;top: 0px; bottom: 0px; left: 0px; right: 0px;min-width: 1000px;overflow: auto;">
+        <div id="menus" style="position: absolute; top: 0px;bottom: 0px; left: 0px;width: 200px;overflow-y: auto;border-right: 1px #000 solid;">
+            <!-- <div class="menu">
+                <p>域名IP信息收集</p>
+            </div> -->
+
+
+        </div>
+        <div id="content" style="position:absolute; top:0px; bottom:0px;left:200px; right:0px;  min-width: 800px;  overflow: auto;">
+
+        </div>
+    </div>
+
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="init.js"></script>
+<script src="connect.js"></script>
+<script src="load.js"></script>
+<!--  -->
+<script>
+    
+    
+    var wolaizhuce = function(aa){
+        console.log(aa+" ");
+    }
+    
+    var qweqwe = function(aa){
+        alert(aa+" wdasd");
+    }
+    
+
+
+
+    function sendMessage(event) {
+        call('wolaizhuce',{"as":'input'})
+    }
+
+</script>
+
+</body>
+</html>

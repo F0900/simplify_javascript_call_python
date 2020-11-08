@@ -1,0 +1,86 @@
+<script>
+    menu_onload('工具说明',"tool_explain_content")
+</script>
+<div id="tool_explain_content" class="content">
+    <p>初衷：简化前后端调用环节减少代码量，使其前后端调用似普通方法调用。支持调用过程运行中后端返回数据至前端（后端使用：send('数据')）。</p>
+    <p>场景：归档整理POC脚本，增加交互性</p>
+    <p>使用说明：</p>
+    <p style="padding-left: 2em;">后端：</p>
+    <p style="padding-left: 4em;">重命名POC脚本，在原脚本名前添加“load_”（以load_开头的文件将被加载待用），将脚本归档至load文件夹内。</p>
+    <p style="padding-left: 4em;">需要在原POC脚本内，添加如下代码：</p>
+    <p style="padding-left: 4em;"># class 类名需为：Regist</p>
+    <p style="padding-left: 4em;">class Regist(object):</p>
+    <p style="padding-left: 6em;"># 注册函数，前端调用后端的名称</p>
+    <p style="padding-left: 6em;">def onRegist(self):</p>
+    <p style="padding-left: 8em;">return '前端调用名'</p>
+    <p style="padding-left: 6em;"># 将原POC脚本入口函数添加到run函数内</p>
+    <p style="padding-left: 6em;"># 参数：send -> 内联函数（使用：send(data)）</p>
+    <p style="padding-left: 6em;"># 参数：data -> 前端传的数据</p>
+    <p style="padding-left: 6em;">def run(self,send,data):</p>
+    <p style="padding-left: 8em;">print(status)</p>
+    <p style="padding-left: 8em;">send('脚本运行中返回给前端的数据')</p>
+    <p style="padding-left: 8em;">print(data)</p>
+    <p style="padding-left: 8em;">return '后端返回数据'</p>
+
+    <p style="padding-left: 2em;">前端：</p>
+    <p style="padding-left: 4em;">1、自定义html代码</p>
+    <p style="padding-left: 6em;">将内容块的html代码块存到单独一个文件夹，如：readme.html。将该html文件存放至static/page内（如：static/page/readme.html）</p>
+    <p style="padding-left: 6em;">在load.js内添加以下代码：regist("page/readme.html")</p>
+    <p style="padding-left: 4em;">2、自定义菜单（自定义的html代码，如何待用？）</p>
+    <p style="padding-left: 6em;">在自定义html文件内添加如下代码：
+    <p style="padding-left: 8em;">&lt;script&gt;</p>
+    <p style="padding-left: 10em;">menu_onload('工具说明',"内容div id")</p>
+    <p style="padding-left: 8em;">&lt;/script&gt;</p>
+    <p style="padding-left: 8em;">&lt;div id=&quot;内容div id&quot; class=&quot;content&quot;&gt;</p>
+    <p style="padding-left: 10em;">html代码</p>
+    <p style="padding-left: 8em;">&lt;/div&gt;</p>
+    <div id="菜单控制的div id" style="display: none;"></div> 
+    <p style="padding-left: 6em;">其中：menu_onload('菜单名称',"tool_explain_content")</p>
+
+    <p style="padding-left: 2em;">前端调用：</p>
+    <p style="padding-left: 4em;">call('后端脚本onRegist函数内return 返回值', 传给脚本的数据)</p>
+
+    <p style="padding-left: 2em;">示例：</p>
+    <p style="padding-left: 4em;">在load文件夹内添加load_example.py脚本文件</p>
+    <p style="padding-left: 4em;">内容为：</p>
+    <p style="padding-left: 4em;">def poc(data):</p>
+    <p style="padding-left: 6em;">print("poc")</p>
+    <p style="padding-left: 6em;">print(data)</p>
+    <p style="padding-left: 6em;">return 'return server poc'</p>
+        
+    <p style="padding-left: 4em;">class Regist(object):</p>
+    <p style="padding-left: 6em;">def onRegist(self):</p>
+    <p style="padding-left: 8em;">return 'server_example'</p>
+    <p style="padding-left: 6em;">def run(self,send,data):</p>
+    <p style="padding-left: 8em;">send(1)</p>
+    <p style="padding-left: 8em;">send(2)</p>
+    <p style="padding-left: 8em;">p = poc(data)</p>
+    <p style="padding-left: 8em;">send(p)</p>
+    <p style="padding-left: 8em;">send(3)</p>
+    <p style="padding-left: 8em;">print(data)</p>
+    <p style="padding-left: 8em;">return 'return server example'</p>
+
+    <p style="padding-left: 4em;">在static文件夹内添加html_example.html页面文件</p>
+    <p style="padding-left: 4em;">内容为：</p>
+    <p style="padding-left: 6em;">&lt;script&gt;</p>
+    <p style="padding-left: 8em;">menu_onload('菜单实例',"html_example")</p>
+    <p style="padding-left: 6em;">&lt;/script&gt;</p>
+    <p style="padding-left: 6em;">&lt;div id="html_example" class="content"&gt;</p>
+    <p style="padding-left: 8em;">&lt;button onclick="ex()"&gt;a&lt;/button&gt;</p>
+    <p style="padding-left: 6em;">&lt;/div&gt;</p>
+
+            
+    <p style="padding-left: 6em;">&lt;script&gt;</p>
+    <p style="padding-left: 8em;">function example(data){</p>
+    <p style="padding-left: 10em;">alert('example')</p>
+    <p style="padding-left: 10em;">alert(data)</p>
+    <p style="padding-left: 8em;">}</p>
+    <p style="padding-left: 8em;">function ex(){</p>
+    <p style="padding-left: 10em;">call('server_example', 'data example', 'example')</p>
+    <p style="padding-left: 8em;">}</p>
+    <p style="padding-left: 6em;">&lt;/script&gt;</p>
+    <p style="padding-left: 4em;">将html_example.html路径注册到static/load.js内</p>
+    <p style="padding-left: 6em;">regist("page/html_example.html")</p>
+
+
+</div>
